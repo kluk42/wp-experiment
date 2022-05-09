@@ -1,20 +1,23 @@
 const path = require("path");
 const autoPrefixer = require("autoprefixer");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  mode: "production",
-  entry: "./src/index.js",
+  entry: path.resolve(__dirname, "..", "src"),
+  resolve: {
+    extensions: [".tsx", ".ts", ".js"],
+  },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "..", "dist"),
     filename: "bundle.js",
     publicPath: "",
+    assetModuleFilename: "bla/[hash][ext][query]",
   },
-  devtool: false,
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(ts|js)x?$/,
         loader: "babel-loader",
         exclude: /node-modules/,
       },
@@ -29,7 +32,7 @@ module.exports = {
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: "[local]__[hash:base64:5]",
+                localIdentName: "[local]",
               },
             },
           },
@@ -47,19 +50,24 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif)$/,
-        loader: "url-loader",
-        options: {
-          limit: 8000,
-          name: "images/[name].[ext]",
-        },
+        type: "asset/resource",
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ["@svgr/webpack"],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: __dirname + "/src/index.html",
+      template: path.resolve(__dirname, "..", "./src/index.html"),
       filename: "index.html",
       inject: "body",
+    }),
+
+    new Dotenv({
+      path: path.resolve(__dirname, "..", "./.env"),
     }),
   ],
 };

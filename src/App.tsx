@@ -1,7 +1,7 @@
-import React from "react";
-import { Link, Route, Routes } from "react-router-dom";
-import Pizza from "./containers/Pizza";
-import { Users } from "./containers/Users";
+import React from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import { ClickCounter } from './containers/ClickCounter';
+import Pizza from './containers/Pizza';
 
 const App = () => {
   return (
@@ -10,9 +10,10 @@ const App = () => {
         <Link to="/">Users</Link>
         <Link to="/pizza">Pizza</Link>
       </div>
+      {process.env.name}
       <div>
         <Routes>
-          <Route path="/" exact element={<Users />} />
+          <Route path="/" element={<ClickCounter />} />
           <Route path="/pizza" element={<Pizza />} />
         </Routes>
       </div>

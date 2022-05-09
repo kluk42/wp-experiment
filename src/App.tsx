@@ -4,7 +4,6 @@ import { ClickCounter } from './containers/ClickCounter';
 import Pizza from './containers/Pizza';
 
 const App = () => {
-  const bl = "ss"
   return (
     <div>
       <div>

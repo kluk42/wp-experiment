@@ -6,7 +6,8 @@
     "start": "webpack serve --config ./webpack/webpack.config.js --env env=dev",
     "build:prod": "webpack --config ./webpack/webpack.config.js --env env=prod",
     "typecheck": "tsc --skipLibCheck",
-    "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\""
+    "lint": "eslint --fix \"./src/**/*.{js,jsx,ts,tsx,json}\"",
+    "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\""
   },
   "author": "Nikita Nemykin <nikitanemykin@mail.ru>",
   "license": "MIT",
@@ -34,6 +35,8 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^12.4.1",
     "postcss-loader": "^6.2.1",
     "prettier": "^2.6.2",
     "react-refresh": "^0.13.0",
@@ -49,5 +52,15 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   }
 }
